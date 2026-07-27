@@ -90,6 +90,7 @@ export async function main(argv = process.argv.slice(2)) {
         { name: "environment variable count ratchet", args: ["check:env-var-count"] },
         { name: "max-lines suppression ratchet", args: ["check:max-lines-ratchet"] },
         { name: "changelog attributions", args: ["check:changelog-attributions"] },
+        { name: "Kubernetes manifest drift", args: ["k8s:manifest:check"] },
         { name: "database-first legacy-store guard", args: ["check:database-first-legacy-stores"] },
         {
           name: "guarded extension wildcard re-exports",

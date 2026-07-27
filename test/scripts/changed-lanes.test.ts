@@ -1218,6 +1218,19 @@ describe("scripts/changed-lanes", () => {
     }
   });
 
+  it("runs the Kubernetes manifest drift guard for manifest source changes", () => {
+    const result = detectChangedLanes(["scripts/k8s/manifests/deployment.yaml"]);
+    const plan = createChangedCheckPlan(result);
+    const commandNames = plan.commands.map((command) => command.args[0]);
+
+    expectLanes(result.lanes, {
+      tooling: true,
+    });
+    expect(commandNames).toContain("k8s:manifest:check");
+    expect(commandNames).toContain("lint:scripts");
+    expect(commandNames).not.toContain("tsgo:all");
+  });
+
   it("routes live Docker ACP tooling changes through a focused gate", () => {
     const result = detectChangedLanes([
       "scripts/lib/live-docker-auth.sh",
